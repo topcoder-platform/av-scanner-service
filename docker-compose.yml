@@ -1,0 +1,21 @@
+version: "3"
+services:
+  clamav:
+    container_name: clamav
+    image: mrshow/clamav:latest
+    restart: always
+    ports:
+      - "3310:3310"
+  app:
+    container_name: clamav-scan-api
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - CLAMAV_HOST=clamav
+      - CLAMAV_PORT=3310
+    links:
+      - clamav
+    depends_on:
+      - clamav
