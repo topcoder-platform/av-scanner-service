@@ -2,7 +2,7 @@ version: "3"
 services:
   clamav:
     container_name: clamav
-    image: mrshow/clamav:latest
+    image: mkodockx/docker-clamav
     restart: always
     ports:
       - "3310:3310"

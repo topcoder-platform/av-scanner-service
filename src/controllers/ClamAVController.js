@@ -51,6 +51,26 @@ function scan (req, res, next) {
   })
 }
 
+/**
+ * Check availability of ClamAV daemon
+ * @param {Object} req The request
+ * @param {Object} res The response
+ */
+function check (req, res) {
+  clamav.ping(config.CLAMAV_PORT, config.CLAMAV_HOST, 2000, err => {
+    if (err) {
+      res.status(503).json({
+        checksRun: 1
+      })
+    } else {
+      res.status(200).json({
+        checksRun: 1
+      })
+    }
+  })
+}
+
 module.exports = {
-  scan
+  scan,
+  check
 }
