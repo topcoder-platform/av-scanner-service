@@ -10,7 +10,7 @@ const cors = require('cors')
 const config = require('config')
 const morgan = require('morgan')
 const logger = require('./src/common/logger')
-const ClamAVControler = require('./src/controllers/ClamAVController')
+const ClamAVController = require('./src/controllers/ClamAVController')
 
 // Create app
 const app = express()
@@ -24,7 +24,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Configure the routes
-app.post(`${config.CONTEXT_PATH}/scan`, ClamAVControler.scan)
+app.post(`${config.CONTEXT_PATH}/scan`, ClamAVController.scan)
+app.get(`${config.CONTEXT_PATH}/health`, ClamAVController.check)
 
 // Error handler
 app.use((err, req, res, next) => {
