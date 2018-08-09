@@ -27,6 +27,7 @@ configure_aws_cli
 sed -i='' "s|app:latest|$TAG|" docker-compose.yml
 docker-compose build app
 #docker tag app:latest $TAG
+eval $(aws ecr get-login --region $AWS_REGION --no-include-email)
 docker push $TAG
 
 ecs-cli configure --region us-east-1 --cluster $CLUSTER
