@@ -31,7 +31,7 @@ eval $(aws ecr get-login --region $AWS_REGION --no-include-email)
 docker push $TAG
 
 ecs-cli configure --region us-east-1 --cluster $CLUSTER
-ecs-cli compose up --project-name av-scanner-service service up
+ecs-cli compose --project-name av-scanner-service service up
 
 
 
