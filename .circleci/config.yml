@@ -4,7 +4,7 @@ jobs:
   # Build & Deploy against development backend
   "build-dev":
     docker:
-      - image: 18.06.0-ce-git
+      - image: docker:18.06.0-ce-git
     steps:
       # Initialization.
       - checkout
