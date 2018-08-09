@@ -7,6 +7,7 @@ services:
     ports:
       - "3310:3310"
   app:
+    image: app:latest
     container_name: clamav-scan-api
     restart: always
     build: .
