@@ -1,0 +1,32 @@
+version: 2
+
+jobs:
+  # Build & Deploy against development backend
+  "build-dev":
+    docker:
+      - image: docker:17.11.0-ce-git
+    steps:
+      # Initialization.
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Installation of build dependencies.
+          command: |
+            apk add --no-cache bash
+            apk add --no-cache jq py-pip sudo curl
+            sudo pip install awscli --upgrade 
+            sudo curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest            
+            sudo chmod +x /usr/local/bin/ecs-cli
+
+      - deploy:
+          command: ./deploy.sh DEV av-scanner-service
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      # Development builds are executed on "develop" branch only.
+      - "build-dev":
+          filters:
+            branches:
+              only: dev-circleci

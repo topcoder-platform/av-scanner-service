@@ -4,15 +4,13 @@ services:
     container_name: clamav
     image: mkodockx/docker-clamav
     restart: always
-    ports:
-      - "3310:3310"
   app:
     image: app:latest
     container_name: clamav-scan-api
     restart: always
     build: .
     ports:
-      - "3000:3000"
+      - "0:3000"
     environment:
       - CLAMAV_HOST=clamav
       - CLAMAV_PORT=3310
