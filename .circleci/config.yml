@@ -13,7 +13,7 @@ jobs:
           name: Installation of build dependencies.
           command: |
             apk add --no-cache bash
-            apk add --no-cache jq py-pip sudo curl
+            apk add --no-cache jq py-pip sudo
             sudo pip install awscli --upgrade 
             sudo curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest            
             sudo chmod +x /usr/local/bin/ecs-cli
