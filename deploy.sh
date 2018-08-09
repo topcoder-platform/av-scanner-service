@@ -31,7 +31,7 @@ eval $(aws ecr get-login --region $AWS_REGION --no-include-email)
 docker push $TAG
 
 ecs-cli configure --region us-east-1 --cluster $CLUSTER
-ecs-cli compose up --create-log-groups
+ecs-cli compose up
 
 
 
