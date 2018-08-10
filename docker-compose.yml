@@ -3,6 +3,7 @@ services:
   clamav:
     container_name: clamav
     image: mkodockx/docker-clamav
+    hostname: clamav
     restart: always
   app:
     image: app:latest
@@ -11,6 +12,8 @@ services:
     build: .
     ports:
       - "0:3000"
+    links:
+      - clamav
     environment:
       - CLAMAV_HOST=clamav
       - CLAMAV_PORT=3310
