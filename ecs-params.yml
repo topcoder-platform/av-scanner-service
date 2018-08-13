@@ -3,20 +3,8 @@ task_definition:
   services:
     clamav:
       cpu_shares: 100
-      mem_limit: 524288000
-      logging:
-        driver: awslogs
-        options: 
-          awslogs-group: /aws/ecs/av-scanner-service
-          awslogs-region: us-east-1
-          awslogs-stream-prefix: clam_server_dev     
-      
+      mem_limit: 524288000  
     app:
       cpu_shares: 100
       mem_limit: 524288000
-      logging:
-        driver: awslogs
-        options: 
-          awslogs-group: /aws/ecs/av-scanner-service
-          awslogs-region: us-east-1
-          awslogs-stream-prefix: clam_api_dev          
+  
