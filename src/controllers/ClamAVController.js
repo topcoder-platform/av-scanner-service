@@ -57,12 +57,15 @@ function scan (req, res, next) {
  * @param {Object} res The response
  */
 function check (req, res) {
+  console.log( "health check" )
   clamav.ping(config.CLAMAV_PORT, config.CLAMAV_HOST, 2000, err => {
     if (err) {
+      console.log( err )
       res.status(503).json({
         checksRun: 1
       })
     } else {
+      console.log( err )      
       res.status(200).json({
         checksRun: 1
       })
