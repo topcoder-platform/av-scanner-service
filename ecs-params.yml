@@ -3,7 +3,7 @@ task_definition:
   services:
     clamav:
       cpu_shares: 100
-      mem_limit: 524288000  
+      mem_limit: 1G  
     app:
       cpu_shares: 100
       mem_limit: 524288000
