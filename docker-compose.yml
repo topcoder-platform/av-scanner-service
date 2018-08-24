@@ -10,7 +10,7 @@ services:
       options: 
         awslogs-group: /aws/ecs/av-scanner-service
         awslogs-region: us-east-1
-        awslogs-stream-prefix: clam_server_dev     
+        awslogs-stream-prefix: clam_server     
   app:
     image: app:latest
     container_name: clamav-scan-api
@@ -32,4 +32,4 @@ services:
       options: 
         awslogs-group: /aws/ecs/av-scanner-service
         awslogs-region: us-east-1
-        awslogs-stream-prefix: clam_api_dev  
+        awslogs-stream-prefix: clam_api  
