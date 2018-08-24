@@ -3,15 +3,23 @@ services:
   clamav:
     container_name: clamav
     image: mkodockx/docker-clamav
-    restart: always
-    ports:
-      - "3310:3310"
+    hostname: clamav
+    restart: always 
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: /aws/ecs/av-scanner-service
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: clam_server     
   app:
+    image: app:latest
     container_name: clamav-scan-api
     restart: always
     build: .
     ports:
-      - "3000:3000"
+      - "0:3000"
+    links:
+      - clamav
     environment:
       - CLAMAV_HOST=clamav
       - CLAMAV_PORT=3310
@@ -19,3 +27,9 @@ services:
       - clamav
     depends_on:
       - clamav
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: /aws/ecs/av-scanner-service
+        awslogs-region: us-east-1
+        awslogs-stream-prefix: clam_api  

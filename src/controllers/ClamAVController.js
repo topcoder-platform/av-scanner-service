@@ -59,10 +59,11 @@ function scan (req, res, next) {
 function check (req, res) {
   clamav.ping(config.CLAMAV_PORT, config.CLAMAV_HOST, 2000, err => {
     if (err) {
-      res.status(503).json({
+     console.log( err )
+     res.status(503).json({   
         checksRun: 1
       })
-    } else {
+    } else {    
       res.status(200).json({
         checksRun: 1
       })
