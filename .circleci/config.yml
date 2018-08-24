@@ -50,7 +50,9 @@ workflows:
       - "build-dev":
           filters:
             branches:
-              only: dev-circleci 
+              only: 
+                - dev-circleci 
+                - develop
       - "build-prod":
           filters:
             branches:
