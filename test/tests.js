@@ -47,3 +47,10 @@ describe('POST /scan', () => {
       })
   )
 })
+
+describe('GET /health', () => {
+  it('should indicate the ClamAV daemon to be active', (done) => {
+    request.get('/health')
+      .expect(200, done)
+  })
+})
