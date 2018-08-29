@@ -2,7 +2,11 @@ version: "3"
 services:
   clamav:
     container_name: clamav
-    image: mkodockx/docker-clamav
+    image: citizensadvice/clamav
+    environment:
+      - MAX_SCAN_SIZE=500M
+      - MAX_FILE_SIZE=500M
+      - MAX_STREAM_LENGTH=500M
     hostname: clamav
     restart: always 
     logging:
