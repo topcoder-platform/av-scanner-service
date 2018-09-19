@@ -36,4 +36,7 @@ services:
       options: 
         awslogs-group: /aws/ecs/av-scanner-service
         awslogs-region: us-east-1
-        awslogs-stream-prefix: clam_api  
+        awslogs-stream-prefix: clam_api
+    env_file:
+      - api.env
+ 
