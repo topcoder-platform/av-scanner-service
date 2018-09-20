@@ -11,7 +11,7 @@ const multer = require('multer')
 const logger = require('../common/logger')
 const helper = require('../common/helper')
 const request = require('superagent')
-const { originator, mimeType, events } = require('../../constants').busApiMeta
+const { originator, mimeType } = require('../../constants').busApiMeta
 
 // Upload middleware, using a temporary directory instead of the default memory storage
 // to make sure the app don't consume much memory when handling large files
@@ -78,7 +78,7 @@ function batchScan (req, res, next) {
 
   // Request body for Posting to Bus API
   const reqBody = {
-    'topic': events.scan,
+    'topic': config.AVSCAN_TOPIC,
     'originator': originator,
     'timestamp': (new Date()).toISOString(),
     'mime-type': mimeType,
@@ -108,6 +108,7 @@ function batchScan (req, res, next) {
 function check (req, res) {
   clamav.ping(config.CLAMAV_PORT, config.CLAMAV_HOST, 2000, err => {
     if (err) {
+      logger.error(err)
       res.status(503).json({
         checksRun: 1
       })

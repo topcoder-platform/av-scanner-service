@@ -4,10 +4,7 @@
 
 const busApiMeta = {
   originator: 'av-scanner-service',
-  mimeType: 'application/json',
-  events: {
-    scan: 'avscan.action.scan'
-  }
+  mimeType: 'application/json'
 }
 
 module.exports = {

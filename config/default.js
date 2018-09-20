@@ -7,6 +7,7 @@ module.exports = {
   PORT: process.env.PORT || 3000,
   CLAMAV_HOST: process.env.CLAMAV_HOST || 'localhost',
   CLAMAV_PORT: process.env.CLAMAV_PORT || 3310,
+  AVSCAN_TOPIC: process.env.AVSCAN_TOPIC || 'avscan.action.scan',
   BUSAPI_EVENTS_URL: process.env.BUSAPI_EVENTS_URL || 'https://api.topcoder-dev.com/v5/bus/events',
   AUTH0_URL: process.env.AUTH0_URL, // Auth0 credentials for AV Scanner Service
   AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE || 'https://www.topcoder.com',
