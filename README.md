@@ -5,7 +5,7 @@
 
 - NodeJS v8.+ (local deployment)
 - ClamAV (local deployment
-- Docker (docker deployment)
+- Docker (docker deployment) 
 
 ## Configuration
 
