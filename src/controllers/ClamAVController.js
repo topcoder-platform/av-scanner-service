@@ -109,7 +109,7 @@ function check (req, res) {
   clamav.ping(config.CLAMAV_PORT, config.CLAMAV_HOST, 2000, err => {
     if (err) {
       logger.error(err)
-      res.status(503).json({
+      res.status(499).json({
         checksRun: 1
       })
     } else {
