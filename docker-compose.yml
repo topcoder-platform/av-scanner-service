@@ -1,8 +1,10 @@
 version: "3"
 services:
   clamav:
-    container_name: clamav
-    image: citizensadvice/clamav
+    container_name: clamav:latest
+    image: clamav:latest
+    build:
+      context: ./clamav-docker
     environment:
       - MAX_SCAN_SIZE=500M
       - MAX_FILE_SIZE=500M
@@ -36,4 +38,7 @@ services:
       options: 
         awslogs-group: /aws/ecs/av-scanner-service
         awslogs-region: us-east-1
-        awslogs-stream-prefix: clam_api  
+        awslogs-stream-prefix: clam_api
+    env_file:
+      - api.env
+ 

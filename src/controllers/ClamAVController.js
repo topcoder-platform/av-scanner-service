@@ -1,11 +1,17 @@
 /**
  * The controller defines endpoint to scan a file by ClamAV.
  */
+
+const _ = require('lodash')
 const config = require('config')
 const fs = require('fs')
+const joi = require('joi')
 const clamav = require('clamav.js')
 const multer = require('multer')
 const logger = require('../common/logger')
+const helper = require('../common/helper')
+const request = require('superagent')
+const { originator, mimeType } = require('../../constants').busApiMeta
 
 // Upload middleware, using a temporary directory instead of the default memory storage
 // to make sure the app don't consume much memory when handling large files
@@ -52,6 +58,49 @@ function scan (req, res, next) {
 }
 
 /**
+   * Process the scan request using events
+   * @param {Object} req the request
+   * @param {Object} res the response
+   * @param {Function} next the next middleware
+   */
+function batchScan (req, res, next) {
+  const schema = joi.object().keys({
+    submissionId: joi.string().uuid().required(),
+    url: joi.string().uri().trim().required(),
+    fileName: joi.string().required()
+  }).required()
+
+  const result = joi.validate(req.body, schema)
+  if (result.error) {
+    result.error.status = 400
+    return next(result.error)
+  }
+
+  // Request body for Posting to Bus API
+  const reqBody = {
+    'topic': config.AVSCAN_TOPIC,
+    'originator': originator,
+    'timestamp': (new Date()).toISOString(),
+    'mime-type': mimeType,
+    'payload': _.extend({ 'status': 'unscanned' }, req.body)
+  }
+
+  helper.getM2Mtoken().then((token) => {
+    request
+      .post(config.BUSAPI_EVENTS_URL)
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json')
+      .send(reqBody)
+      .then(result => {
+        res.status(result.statusCode).json({})
+      })
+      .catch(err => {
+        return next(err)
+      })
+  })
+}
+
+/**
  * Check availability of ClamAV daemon
  * @param {Object} req The request
  * @param {Object} res The response
@@ -59,11 +108,11 @@ function scan (req, res, next) {
 function check (req, res) {
   clamav.ping(config.CLAMAV_PORT, config.CLAMAV_HOST, 2000, err => {
     if (err) {
-     console.log( err )
-     res.status(503).json({   
+      logger.error(err)
+      res.status(503).json({
         checksRun: 1
       })
-    } else {    
+    } else {
       res.status(200).json({
         checksRun: 1
       })
@@ -73,5 +122,6 @@ function check (req, res) {
 
 module.exports = {
   scan,
+  batchScan,
   check
 }

@@ -1,10 +1,11 @@
 # Topcoder - Submission ClamAV API
 
+
 ## Requirements
 
 - NodeJS v8.+ (local deployment)
 - ClamAV (local deployment
-- Docker (docker deployment)
+- Docker (docker deployment) 
 
 ## Configuration
 
@@ -12,6 +13,9 @@ The configurations can be changed in `config/default.js` (default environment) a
 
 - `CLAMAV_HOST` the ClamAV daemon host (`TCPAddr` in `clam.conf`)
 - `CLAMAV_PORT` the ClamAV daemon port (`TCPSocket` in `clam.conf`)
+- `BUSAPI_EVENTS_URL` Bus API URL
+- `AVSCAN_TOPIC` AV Scan Kafka topic
+- All environment variables starting with `AUTH0` prefix
 
 ## Local Deployment
 
