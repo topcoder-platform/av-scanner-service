@@ -35,6 +35,7 @@ jobs:
             ./awsconfiguration.sh DEV
             source awsenvconf
             ./buildenv.sh -e DEV -b dev-global-appvar,dev-av-scanner-service-buildvar
+            source buildenvvar
             ./deploy.sh av-scanner-service
   "build-prod":
     <<: *defaults
@@ -50,6 +51,7 @@ jobs:
             ./awsconfiguration.sh PROD
             source awsenvconf
             ./buildenv.sh -e PROD -b prod-global-appvar,prod-av-scanner-service-buildvar
+            source buildenvvar
             ./deploy.sh av-scanner-service
 workflows:
   version: 2
