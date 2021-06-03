@@ -11,10 +11,13 @@ install_dependency: &install_dependency
 install_deploysuite: &install_deploysuite
           name: Installation of install_deploysuite.
           command: |
-            git clone --branch v1.3 https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
+            git clone --branch v1.4.1 https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
             cp ./../buildscript/master_deploy.sh .
             cp ./../buildscript/buildenv.sh .
             cp ./../buildscript/awsconfiguration.sh .
+run_build: &run_build
+          name: Installation of build dependencies.
+          command: ./build.sh
 jobs:
   # Build & Deploy against development backend
   "build-dev":
@@ -25,6 +28,7 @@ jobs:
       - setup_remote_docker
       - run: *install_dependency
       - run: *install_deploysuite
+      - run: *run_build
       - deploy:
           name: Running deployment.
           command: |
@@ -32,7 +36,7 @@ jobs:
             source awsenvconf
             ./buildenv.sh -e DEV -b dev-global-appvar,dev-av-scanner-service-buildvar
             source buildenvvar
-            ./deploy.sh av-scanner-service
+            ./master_deploy.sh -d ECS -e DEV -t latest -s dev-global-appvar,dev-av-scanner-service-appvar -i av-scanner-service
   "build-prod":
     <<: *defaults
     steps:
@@ -41,6 +45,7 @@ jobs:
       - setup_remote_docker
       - run: *install_dependency
       - run: *install_deploysuite
+      - run: *run_build
       - deploy:
           name: Running MasterScript.
           command: |
@@ -48,7 +53,7 @@ jobs:
             source awsenvconf
             ./buildenv.sh -e PROD -b prod-global-appvar,prod-av-scanner-service-buildvar
             source buildenvvar
-            ./deploy.sh av-scanner-service
+            ./master_deploy.sh -d ECS -e PROD -t latest -s prod-global-appvar,prod-av-scanner-service-appvar -i av-scanner-service
 workflows:
   version: 2
   build:
