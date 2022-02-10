@@ -1,17 +1,17 @@
 /**
  * Configure the logger.
  */
-const config = require('config')
-const winston = require('winston')
+const config = require("config");
+const { createLogger, format, transports } = require("winston");
 
 // Initialize the logger
-const logger = new winston.Logger({
+const logger = createLogger({
   level: config.LOG_LEVEL,
   transports: [
-    new winston.transports.Console({
-      timestamp: () => new Date().toISOString()
-    })
-  ]
-})
+    new transports.Console({
+      format: format.combine(format.colorize(), format.simple()),
+    }),
+  ],
+});
 
-module.exports = logger
+module.exports = logger;
