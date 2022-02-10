@@ -1,11 +1,10 @@
 # Topcoder - Submission ClamAV API
 
-
 ## Requirements
 
-- NodeJS v8.+ (local deployment)
+- NodeJS v16.+ (local deployment)
 - ClamAV (local deployment
-- Docker (docker deployment) 
+- Docker (docker deployment)
 
 ## Configuration
 
@@ -44,7 +43,7 @@ The configurations can be changed in `config/default.js` (default environment) a
 
 ```bash
 > curl -X POST http://localhost:3000/api/v1/scan -F "file=@C:\EICAR_submission.zip"
-{"infected":true,"malicious":"Eicar-Test-Signature"}
+{"infected":true,"malicious":"Win.Test.EICAR_HDB-1"}
 ```
 
 ## How to use the REST API
@@ -54,7 +53,7 @@ The configurations can be changed in `config/default.js` (default environment) a
 - The response json format includes 2 properties:
 
 ```json
-{"infected":true,"malicious":"Eicar-Test-Signature"}
+{ "infected": true, "malicious": "Win.Test.EICAR_HDB-1" }
 ```
 
 - `infected`: true if the file was infected by a malicious, otherwise false

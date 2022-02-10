@@ -27,7 +27,6 @@ echo "AUTH0_PROXY_SERVER_URL=$AUTH0_PROXY_SERVER_URL" >>api.env
 echo "BUSAPI_EVENTS_URL=$BUSAPI_EVENTS_URL" >>api.env
 
 TAG=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$AWS_REPOSITORY:$CIRCLE_BUILD_NUM
-CLAMAVTAG=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$AWS_REPOSITORY_CLAMAV:$CIRCLE_BUILD_NUM
 
 # configure_aws_cli() {
 # 	aws --version
@@ -40,11 +39,9 @@ CLAMAVTAG=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$AWS_REPOSITORY_CLAM
 
 # configure_aws_cli
 sed -i='' "s|app:latest|$TAG|" docker-compose.yml
-sed -i='' "s|clamav:latest|$CLAMAVTAG|" docker-compose.yml
 docker-compose build
 #docker tag app:latest $TAG
 eval $(aws ecr get-login --region $AWS_REGION --no-include-email)
-docker push $CLAMAVTAG
 docker push $TAG
 
 ecs-cli configure --region us-east-1 --cluster $CLUSTER
