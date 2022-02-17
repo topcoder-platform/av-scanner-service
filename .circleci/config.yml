@@ -1,7 +1,7 @@
 version: 2
 defaults: &defaults
   docker:
-    - image: cimg/python:3.10.2-browsers
+    - image: circleci/python:2.7-stretch-browsers
 install_dependency: &install_dependency
   name: Installation of build and deployment dependencies.
   command: |
@@ -24,7 +24,8 @@ jobs:
     steps:
       # Initialization.
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.11
       - run: *install_dependency
       - run: *install_deploysuite
       - deploy:
@@ -40,7 +41,8 @@ jobs:
     steps:
       # Initialization.
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.11
       - run: *install_dependency
       - run: *install_deploysuite
       - deploy:
