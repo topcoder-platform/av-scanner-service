@@ -1,10 +1,6 @@
 version: 1
 task_definition:
   services:
-    clamav:
-      cpu_shares: 256
-      mem_limit: 2G  
     app:
-      cpu_shares: 256
-      mem_limit: 1G
-  
+      cpu_shares: 128
+      mem_limit: 512MB

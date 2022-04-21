@@ -1,7 +1,7 @@
 {
-  "name": "clamav-scan-api",
+  "name": "scan-api",
   "version": "1.0.0",
-  "description": "ClamAV Scan API",
+  "description": "Scan API",
   "main": "index.js",
   "scripts": {
     "start": "node index",
@@ -10,8 +10,6 @@
     "test": "nyc --reporter=html --reporter=text mocha test/tests.js --exit"
   },
   "dependencies": {
-    "@ronomon/pure": "^1.0.4",
-    "clamscan": "^2.0.1",
     "config": "^1.30.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",

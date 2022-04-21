@@ -10,7 +10,7 @@ const config = require("config");
 const express = require("express");
 const morgan = require("morgan");
 const logger = require("./src/common/logger");
-const ClamAVController = require("./src/controllers/ClamAVController");
+const ScannerController = require("./src/controllers/ScannerController");
 
 // Create app
 const app = express();
@@ -31,9 +31,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Configure the routes
-app.post(`${config.CONTEXT_PATH}/scan`, ClamAVController.scan);
-app.post(`${config.CONTEXT_PATH}/batchScan`, ClamAVController.batchScan);
-app.get(`${config.CONTEXT_PATH}/health`, ClamAVController.check);
+app.post(`${config.CONTEXT_PATH}/batchScan`, ScannerController.batchScan);
+app.get(`${config.CONTEXT_PATH}/health`, ScannerController.check);
 
 // Error handler
 app.use((err, req, res, next) => {
