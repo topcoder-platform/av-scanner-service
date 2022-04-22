@@ -1,8 +1,6 @@
-FROM node:8.11.3-alpine
+FROM node:16.14.0-alpine
 
-# Add necessary build tools to install packages from Git
-RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh python make
+RUN apk add g++ make python3
 
 RUN mkdir -p /usr/src/app
 

@@ -10,8 +10,8 @@
     "test": "nyc --reporter=html --reporter=text mocha test/tests.js --exit"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "clamav.js": "^0.12.0",
+    "@ronomon/pure": "^1.0.4",
+    "clamscan": "^2.0.1",
     "config": "^1.30.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",
@@ -21,12 +21,15 @@
     "multer": "^1.3.1",
     "superagent": "^3.8.3",
     "tc-core-library-js": "appirio-tech/tc-core-library-js.git#v2.6",
-    "winston": "^2.4.2"
+    "winston": "^3.5.1"
   },
   "devDependencies": {
-    "mocha": "^5.2.0",
-    "nyc": "^12.0.2",
-    "standard": "^11.0.1",
+    "mocha": "^9.2.0",
+    "nyc": "^15.1.0",
+    "standard": "^16.0.4",
     "supertest": "^3.1.0"
+  },
+  "volta": {
+    "node": "16.14.0"
   }
 }

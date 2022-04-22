@@ -1,44 +1,40 @@
 version: "3"
 services:
   clamav:
-    container_name: clamav:latest
-    image: clamav:latest
-    build:
-      context: ./clamav-docker
+    container_name: clamav
+    image: clamav/clamav
     environment:
+      - CLAMAV_NO_MILTERD=false
       - MAX_SCAN_SIZE=500M
       - MAX_FILE_SIZE=500M
       - MAX_STREAM_LENGTH=500M
     hostname: clamav
-    restart: always 
+    restart: always
     logging:
       driver: awslogs
-      options: 
+      options:
         awslogs-group: /aws/ecs/av-scanner-service
         awslogs-region: us-east-1
-        awslogs-stream-prefix: clam_server     
+        awslogs-stream-prefix: clam_server
   app:
     image: app:latest
     container_name: clamav-scan-api
     restart: always
     build: .
     ports:
-      - "0:3000"
+      - "3000:3000"
     links:
       - clamav
     environment:
       - CLAMAV_HOST=clamav
       - CLAMAV_PORT=3310
-    links:
-      - clamav
     depends_on:
       - clamav
     logging:
       driver: awslogs
-      options: 
+      options:
         awslogs-group: /aws/ecs/av-scanner-service
         awslogs-region: us-east-1
         awslogs-stream-prefix: clam_api
     env_file:
       - api.env
- 

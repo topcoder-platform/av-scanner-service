@@ -1,7 +1,7 @@
 version: 2
 defaults: &defaults
-    docker:
-      - image: circleci/python:2.7-stretch-browsers
+  docker:
+    - image: circleci/python:2.7-stretch-browsers
 install_dependency: &install_dependency
   name: Installation of build and deployment dependencies.
   command: |
@@ -11,12 +11,12 @@ install_dependency: &install_dependency
     sudo curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest  
     sudo chmod +x /usr/local/bin/ecs-cli
 install_deploysuite: &install_deploysuite
-          name: Installation of install_deploysuite.
-          command: |
-            git clone --branch v1.3 https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
-            cp ./../buildscript/master_deploy.sh .
-            cp ./../buildscript/buildenv.sh .
-            cp ./../buildscript/awsconfiguration.sh .
+  name: Installation of install_deploysuite.
+  command: |
+    git clone --branch v1.3 https://github.com/topcoder-platform/tc-deploy-scripts ../buildscript
+    cp ./../buildscript/master_deploy.sh .
+    cp ./../buildscript/buildenv.sh .
+    cp ./../buildscript/awsconfiguration.sh .
 jobs:
   # Build & Deploy against development backend
   "build-dev":
@@ -24,7 +24,8 @@ jobs:
     steps:
       # Initialization.
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.11
       - run: *install_dependency
       - run: *install_deploysuite
       - deploy:
@@ -40,7 +41,8 @@ jobs:
     steps:
       # Initialization.
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.11
       - run: *install_dependency
       - run: *install_deploysuite
       - deploy:
@@ -57,13 +59,13 @@ workflows:
     jobs:
       # Development builds are executed on "develop" branch only.
       - "build-dev":
-          context : org-global
+          context: org-global
           filters:
             branches:
               only:
                 - develop
       - "build-prod":
-          context : org-global
+          context: org-global
           filters:
             branches:
-              only: master 
+              only: master
