@@ -64,7 +64,6 @@ workflows:
             branches:
               only:
                 - develop
-                - feat/cleanup-scanner
       - "build-prod":
           context: org-global
           filters:
