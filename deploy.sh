@@ -39,6 +39,7 @@ TAG=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$AWS_REPOSITORY:$CIRCLE_BU
 
 # configure_aws_cli
 sed -i='' "s|app:latest|$TAG|" docker-compose.yml
+docker system prune -a
 docker-compose build
 #docker tag app:latest $TAG
 eval $(aws ecr get-login --region $AWS_REGION --no-include-email)
