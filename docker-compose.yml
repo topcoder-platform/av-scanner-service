@@ -6,7 +6,7 @@ services:
     restart: always
     build: .
     ports:
-      - "3000:3000"
+      - "0:3000"
     logging:
       driver: awslogs
       options:
